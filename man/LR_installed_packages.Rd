@@ -7,7 +7,7 @@
 LR_installed_packages()
 }
 \value{
-data.table
+All installed packages as a data.table
 }
 \description{
 LR_installed_packages
