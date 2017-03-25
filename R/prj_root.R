@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-LR_get.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
+LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 {
     dir_parts <- unlist(strsplit(dir, split='/', fixed=TRUE))
     for(i in length(dir_parts):1) {
@@ -37,19 +37,31 @@ LR_get.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #'
 #' @examples
 #' @export
-LR_get.prj_dirs <- function(prj_root=NULL, marker='.PRJ_ROOT')
+LR.prj_dirs <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
-    if (is.null(prj_root)) prj_root <- LR_get.prj_root(marker = marker)
+    if (is.null(prj_root)) prj_root <- LR.prj_root(marker=marker)
+
+    mkfn <- function(subdir) {
+        dir <- file.path(prj_root, subdir)
+        return (function(filename=NULL) {
+            if (is.null(filename)) {
+                return (dir)
+            } else {
+                return (file.path(dir, filename))
+            }
+        })
+    }
+
     dirs <- list(
         prj_root= prj_root,
-        ana     = file.path(prj_root, 'src/ana'),
-        dat     = file.path(prj_root, 'dat'),
-        dat_raw = file.path(prj_root, 'dat/raw'),
-        doc     = file.path(prj_root, 'doc'),
-        lib     = file.path(prj_root, 'src/lib'),
-        mng     = file.path(prj_root, 'src/mng'),
-        rpt     = file.path(prj_root, 'src/rpt'),
-        src     = file.path(prj_root, 'src')
+        ana     = mkfn('src/ana'),
+        dat     = mkfn('dat'),
+        dat_raw = mkfn('dat/raw'),
+        doc     = mkfn('doc'),
+        lib     = mkfn('src/lib'),
+        mng     = mkfn('src/mng'),
+        rpt     = mkfn('src/rpt'),
+        src     = mkfn('src')
                   )
     return (dirs)
 }

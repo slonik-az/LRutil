@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' @export
-LR_installed_packages <- function()
+LR.installed_packages <- function()
 {
     return (data.table::data.table(installed.packages(fields=
         c('Repository','RemoteType','RemoteRepo','RemoteRef','RemoteHost')),
