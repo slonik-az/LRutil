@@ -1,6 +1,8 @@
 
 #' Find the project root
 #'
+#' prj_root marker file (.PRJ_ROOT by default) must exist in the project root directory.
+#'
 #' @param dir where to start the search.
 #' @param marker name of the project root marker file.
 #'
@@ -22,38 +24,46 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 
 #' Return list of standard LR project sub-dirs
 #'
-#' ana        - Data Analysis (src/ana) \cr
-#' dat        - Data directory (dat/) \cr
-#' dat_raw    - Raw data directory (dat/raw) \cr
-#' lib        - Library code (src/lib) \cr
-#' mng        - Data Munging/Wrangling (src/mng) \cr
-#' rpt        - Reports (src/rpt) \cr
-#' src        - Source tree (src)
+#' prj_root marker file (.PRJ_ROOT by default) must exist in the project root directory. \cr
+#' Returns a list of functions that when called will resolve to the following directories:
+#' \itemize{
+#'   \item ana        - Data Analysis (src/ana)
+#'   \item dat        - Data directory (dat/)
+#'   \item dat_raw    - Raw data directory (dat/raw)
+#'   \item lib        - Library code (src/lib)
+#'   \item mng        - Data Munging/Wrangling (src/mng)
+#'   \item rpt        - Reports (src/rpt)
+#'   \item src        - Source tree (src)
+#' }
 #'
-#' @param prj_root Project Root dir. Discover it if NULL
-#' @param marker Project root marker.
-#'
-#' @return list of LR project subdirs
+#' @return List of essential project subdirs as functions that when called with
+#'   a filename produce the correspinding path; when called without a filename
+#'   return the path to the subdir itself; see Examples for details.
 #'
 #' @examples
+#' \dontrun{
+#' prj_dirs <- LR.prj_dirs()
+#' prj_dirs$root()  # return prj_root
+#' prj_dirs$root('readme') # returns path to prj_root/readme
+#' prj_dirs$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
+#' }
+#'
+#' @param prj_root Project Root dir. Auto-discover if NULL
+#' @param marker Project root marker.
 #' @export
 LR.prj_dirs <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
     if (is.null(prj_root)) prj_root <- LR.prj_root(marker=marker)
 
-    mkfn <- function(subdir) {
-        dir <- file.path(prj_root, subdir)
-        return (function(filename=NULL) {
-            if (is.null(filename)) {
-                return (dir)
-            } else {
-                return (file.path(dir, filename))
-            }
-        })
+    mkfn <- function(subdir=NULL) {
+        dir <- if(is.null(subdir)){prj_root}else{file.path(prj_root,subdir)}
+        function(filename=NULL) {
+            if(is.null(filename)){dir}else{file.path(dir,filename)}
+        }
     }
 
     dirs <- list(
-        prj_root= prj_root,
+        root    = mkfn(),
         ana     = mkfn('src/ana'),
         dat     = mkfn('dat'),
         dat_raw = mkfn('dat/raw'),
