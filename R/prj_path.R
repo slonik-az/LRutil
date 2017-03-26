@@ -42,16 +42,16 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #'
 #' @examples
 #' \dontrun{
-#' prj_dirs <- LR.prj_dirs()
-#' prj_dirs$root()  # return prj_root
-#' prj_dirs$root('readme') # returns path to prj_root/readme
-#' prj_dirs$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
+#' prj_path <- LR.prj_path()
+#' prj_path$root()  # return prj_root
+#' prj_path$root('readme') # returns path to prj_root/readme
+#' prj_path$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
 #' }
 #'
 #' @param prj_root Project Root dir. Auto-discover if NULL
 #' @param marker Project root marker.
 #' @export
-LR.prj_dirs <- function(prj_root=NULL, marker='.PRJ_ROOT')
+LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
     if (is.null(prj_root)) prj_root <- LR.prj_root(marker=marker)
 
