@@ -22,23 +22,21 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
     return (NULL)
 }
 
-#' Return list of standard LR project sub-dirs
+#' Form standard LR project directory hierarchy.
 #'
-#' prj_root marker file (.PRJ_ROOT by default) must exist in the project root directory. \cr
-#' Returns a list of functions that when called will resolve to the following directories:
-#' \itemize{
-#'   \item ana        - Data Analysis (src/ana)
-#'   \item dat        - Data directory (dat/)
-#'   \item dat_raw    - Raw data directory (dat/raw)
-#'   \item lib        - Library code (src/lib)
-#'   \item mng        - Data Munging/Wrangling (src/mng)
-#'   \item rpt        - Reports (src/rpt)
-#'   \item src        - Source tree (src)
-#' }
+#' prj_root marker file (.PRJ_ROOT by default) must exist in the project root directory.
 #'
 #' @return List of essential project subdirs as functions that when called with
 #'   a filename produce the correspinding path; when called without a filename
 #'   return the path to the subdir itself; see Examples for details.
+#'   \item{root}{       - project root}
+#'   \item{ana}{        - Data Analysis (src/ana)}
+#'   \item{dat}{        - Data directory (dat/)}
+#'   \item{dat_raw}{    - Raw data directory (dat/raw)}
+#'   \item{lib}{        - Library code (src/lib)}
+#'   \item{mng}{        - Data Munging/Wrangling (src/mng)}
+#'   \item{rpt}{        - Reports (src/rpt)}
+#'   \item{src}{        - Source tree (src)}
 #'
 #' @examples
 #' \dontrun{
@@ -49,7 +47,7 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #' }
 #'
 #' @param prj_root Project Root dir. Auto-discover if NULL
-#' @param marker Project root marker.
+#' @param marker Project root marker file. Must exist in the project root directory.
 #' @export
 LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
