@@ -1,6 +1,5 @@
 #|> Package utilities
 
-
 #' LR_installed_packages
 #'
 #' @return All installed packages as a data.table
