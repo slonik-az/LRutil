@@ -3,5 +3,7 @@
 export(LR.installed_packages)
 export(LR.prj_path)
 export(LR.prj_root)
+export(LR.prj_skeleton)
 export(hello)
 export(is.naf)
+importFrom(stringr,str_replace_all)

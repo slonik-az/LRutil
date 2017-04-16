@@ -1,3 +1,20 @@
+#|> My favorite R project directory layout
+
+#' @importFrom stringr  str_replace_all
+
+prj_dirs <- matrix(c(
+    '',        'root',
+    'bin',     'bin',
+    'dat',     'dat',
+    'dat/raw', 'dat_raw',
+    'doc',     'doc',
+    'doc/rpt', 'rpt',
+    'lib',     'lib',
+    'src',     'src',
+    'src/ana', 'ana',
+    'src/lib', 'src_lib',
+    'src/mng', 'mng'
+), nrow=2)
 
 #' Find the project root
 #'
@@ -31,11 +48,12 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #'   return the path to the subdir itself; see Examples for details.
 #'   \item{root}{       - project root}
 #'   \item{ana}{        - Data Analysis (src/ana)}
-#'   \item{dat}{        - Data directory (dat/)}
+#'   \item{dat}{        - Data directory (dat)}
 #'   \item{dat_raw}{    - Raw data directory (dat/raw)}
+#'   \item{doc}{        - Documentation directory (doc)}
 #'   \item{lib}{        - Library code (src/lib)}
 #'   \item{mng}{        - Data Munging/Wrangling (src/mng)}
-#'   \item{rpt}{        - Reports (src/rpt)}
+#'   \item{rpt}{        - Reports (doc/rpt)}
 #'   \item{src}{        - Source tree (src)}
 #'
 #' @examples
@@ -52,27 +70,49 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
     if (is.null(prj_root)) prj_root <- LR.prj_root(marker=marker)
-
-    mkfn <- function(subdir=NULL) {
-        dir <- if(is.null(subdir)){prj_root}else{file.path(prj_root,subdir)}
-        function(filename=NULL) {
+    mkfn <- function(subdir='') {
+        dir <- if(subdir==''){prj_root}else{file.path(prj_root,subdir)}
+        return (function(filename=NULL) {
             if(is.null(filename)){dir}else{file.path(dir,filename)}
-        }
+        })
     }
+    res <- lapply(prj_dirs[1,], mkfn)
+    names(res) <- prj_dirs[2,]
+    return (res)
 
-    dirs <- list(
-        root    = mkfn(),
-        ana     = mkfn('src/ana'),
-        dat     = mkfn('dat'),
-        dat_raw = mkfn('dat/raw'),
-        doc     = mkfn('doc'),
-        lib     = mkfn('src/lib'),
-        mng     = mkfn('src/mng'),
-        rpt     = mkfn('src/rpt'),
-        src     = mkfn('src')
-                  )
-    return (dirs)
+#     dirs <- list(
+#         root    = mkfn(),
+#         ana     = mkfn('src/ana'),
+#         dat     = mkfn('dat'),
+#         dat_raw = mkfn('dat/raw'),
+#         doc     = mkfn('doc'),
+#         lib     = mkfn('src/lib'),
+#         mng     = mkfn('src/mng'),
+#         rpt     = mkfn('src/rpt'),
+#         src     = mkfn('src')
+#                   )
+#     return (dirs)
 }
+
+#' LR.prj_skeleton(.) create standard project skeleton sub-directores
+#'
+#' For project directory structure see \code{\link{LR.prj_path}}.
+#'
+#' @param root project root
+#' @param marker project root marker
+#' @param mode mode for the directories
+#'
+#' @return nothing
+#'
+#' @examples
+#' @export
+LR.prj_skeleton <- function(root='.', marker='.PRJ_ROOT', mode='0755')
+{
+    sapply(file.path(root, prj_dirs[1,]), dir.create,
+            showWarnings=FALSE,recursive=TRUE,mode=mode)
+    file.create(file.path(root, marker))
+}
+
 
 ####################################################
 ## vim:tw=105:ft=R:spell:fdm=indent:fdl=0:fdi=:sw=2:
