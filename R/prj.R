@@ -13,7 +13,8 @@ prj_dirs <- matrix(c(
     'src',     'src',
     'src/ana', 'ana',
     'src/lib', 'src_lib',
-    'src/mng', 'mng'
+    'src/mng', 'mng',
+    'pkg',     'pkg'
 ), nrow=2)
 
 #' Find the project root
@@ -55,6 +56,7 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #'   \item{mng}{        - Data Munging/Wrangling (src/mng)}
 #'   \item{rpt}{        - Reports (doc/rpt)}
 #'   \item{src}{        - Source tree (src)}
+#'   \item{pkg}{        - In case some code is made into R-packages (pkg)}
 #'
 #' @examples
 #' \dontrun{
