@@ -40,8 +40,9 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
     return (NULL)
 }
 
-#' Form standard LR project directory hierarchy.
+#' Discover standard LR project directory hierarchy.
 #'
+#' Discover standard LR project directory hierarchy.
 #' prj_root marker file (.PRJ_ROOT by default) must exist in the project root directory.
 #'
 #' @return List of essential project subdirs as functions that when called with
