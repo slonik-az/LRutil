@@ -1,7 +1,7 @@
 Package: LRutil
 Type: Package
 Title: Collectoin of functions I find useful.
-Version: 0.3.0
+Version: 0.3.1
 Author: Leo Razoumov
 Maintainer: Leo Razoumov <slonik.az@gmail.com>
 Description: Useful utilities by Leo Razoumov

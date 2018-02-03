@@ -61,10 +61,10 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #'
 #' @examples
 #' \dontrun{
-#' prj_path <- LR.prj_path()
-#' prj_path$root()  # return prj_root
-#' prj_path$root('readme') # returns path to prj_root/readme
-#' prj_path$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
+#' if(!exists('prj')){ prj <- LRutil::LR.prj_path() }
+#' prj$root()  # return prj_root
+#' prj$root('readme') # returns path to prj_root/readme
+#' prj$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
 #' }
 #'
 #' @param prj_root Project Root dir. Auto-discover if NULL
