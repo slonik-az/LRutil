@@ -3,7 +3,7 @@
 #' @importFrom stringr  str_replace_all
 
 prj_dirs <- matrix(c(
-    '',        'root',
+    '',        'root',  # this line must be the first!
     'bin',     'bin',
     'dat',     'dat',
     'dat/raw', 'dat_raw',
@@ -123,11 +123,14 @@ LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 #'
 #' @examples
 #' @export
-LR.prj_skeleton <- function(root='.', marker='.PRJ_ROOT', mode='0755')
+LR.prj_skeleton <- function(root='.', marker='.PRJ_ROOT', mode='0750')
 {
-    sapply(file.path(root, prj_dirs[1,]), dir.create,
-            showWarnings=FALSE,recursive=TRUE,mode=mode)
+    dirs     <- file.path(root, prj_dirs[1,])
+    keep_fls <- file.path(dirs[-1],'.keep')
+    sapply(dirs, dir.create, showWarnings=FALSE,recursive=TRUE,mode=mode)
     file.create(file.path(root, marker))
+    file.create(keep_fls, showWarnings=FALSE)
+    Sys.chmod(keep_fls, mode='0640', use_umask=TRUE)
 }
 
 #z <- LR.prj_path(prj_root=TRUE)
