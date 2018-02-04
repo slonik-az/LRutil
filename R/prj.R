@@ -67,12 +67,19 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #' prj$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
 #' }
 #'
-#' @param prj_root Project Root dir. Auto-discover if NULL
+#' @param prj_root Project Root dir.
+#'   if NULL -- auto-discover from current working directory getwd().
+#'   if TRUE -- (only use in scripts, never directly in console!)
+#'     auto-discover from the path of the script being executed or sourced.
 #' @param marker Project root marker file. Must exist in the project root directory.
 #' @export
 LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
-    if (is.null(prj_root)) prj_root <- LR.prj_root(marker=marker)
+    if (is.null(prj_root)) {
+        prj_root <- LR.prj_root(dir=getwd(), marker=marker)
+    } else if (isTRUE(prj_root)) {
+        prj_root <- LR.prj_root(dir=dirname(sys.frame(1L)$filename), marker=marker)
+    }
     mkfn <- function(subdir='') {
         dir <- if(subdir==''){prj_root}else{file.path(prj_root,subdir)}
         return (function(filename=NULL) {
@@ -116,6 +123,7 @@ LR.prj_skeleton <- function(root='.', marker='.PRJ_ROOT', mode='0755')
     file.create(file.path(root, marker))
 }
 
+#z <- LR.prj_path(prj_root=TRUE)
 
 ####################################################
 ## vim:tw=105:ft=R:spell:fdm=indent:fdl=0:fdi=:sw=2:
