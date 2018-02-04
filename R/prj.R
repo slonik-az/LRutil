@@ -21,15 +21,24 @@ prj_dirs <- matrix(c(
 #'
 #' prj_root marker file (.PRJ_ROOT by default) must exist in the project root directory.
 #'
-#' @param dir where to start the search.
+#' @param dir where to start the search if a string. If \code{NULL} or \code{FALSE} then start at the
+#'   current working directory (getwd()). If \code{TRUE} (should only be used in scripts that are
+#'   sourced/executed) then try directory of the file being sourced, otherwise current working directory.
 #' @param marker name of the project root marker file.
 #'
-#' @return project root or NULL if failed
+#' @return project root or \code{NULL} if failed
 #' @export
 #'
 #' @examples
-LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
+LR.prj_root <- function(dir=NULL, marker='.PRJ_ROOT')
 {
+    dir <-     if (is.character(dir))   { dir
+        } else if (isTRUE(dir) && sys.nframe()>0) {# recurse & return
+            l <- sys.frame(1L)
+            f <- if(!is.null(f<-l$filename) || !is.null(f<-l$ofile)) f else NULL
+            return (if(!is.null(f)) LR.prj_root(dir=dirname(f), marker=marker)
+                    else LR.prj_root(dir=getwd(), marker=marker))
+        } else { getwd() }
     dir_parts <- unlist(strsplit(dir, split='/', fixed=TRUE))
     for(i in length(dir_parts):1) {
         d <- do.call(file.path, as.list(dir_parts[1:i]))
@@ -67,18 +76,16 @@ LR.prj_root <- function(dir= getwd(), marker='.PRJ_ROOT')
 #' prj$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
 #' }
 #'
-#' @param prj_root Project Root dir.
-#'   if NULL -- auto-discover from current working directory getwd().
-#'   if TRUE -- (only use in scripts, never directly in console!)
-#'     auto-discover from the path of the script being executed or sourced.
-#' @param marker Project root marker file. Must exist in the project root directory.
+#' @param prj_root  Project Root directory if string.
+#'   if \code{NULL} or \code{FALSE} -- auto-discover from current working directory \code{getwd()}.
+#'   if \code{TRUE} -- (only use in scripts, never directly in console!)
+#'     auto-discover from the path of the script being executed or sourced, otherwise \code{getwd()}.
+#' @param marker  Project root marker file. Must exist in the project root directory.
 #' @export
 LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
-    if (is.null(prj_root)) {
-        prj_root <- LR.prj_root(dir=getwd(), marker=marker)
-    } else if (isTRUE(prj_root)) {
-        prj_root <- LR.prj_root(dir=dirname(sys.frame(1L)$filename), marker=marker)
+    if (!is.character(prj_root)) {# discover root if prj_root is NULL or TRUE
+        prj_root <- LR.prj_root(dir=prj_root, marker=marker)
     }
     mkfn <- function(subdir='') {
         dir <- if(subdir==''){prj_root}else{file.path(prj_root,subdir)}
