@@ -1,7 +1,5 @@
 #|> My favorite R project directory layout
 
-#' @importFrom stringr  str_replace_all
-
 prj_dirs <- matrix(c(
     '',        'root',  # this line must be the first!
     'bin',     'bin',

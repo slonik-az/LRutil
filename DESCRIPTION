@@ -6,9 +6,8 @@ Author: Leo Razoumov
 Maintainer: Leo Razoumov <slonik.az@gmail.com>
 Description: Useful utilities by Leo Razoumov
 License: MIT + file LICENSE
+Depends:
+    data.table (>= 1.10.1)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Depends:
-    data.table (>= 1.10.1)
-Imports: stringr
