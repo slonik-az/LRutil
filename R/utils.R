@@ -41,5 +41,21 @@ LR.find_file <- function(dir='.', pattern='', index='last', ignore.case=TRUE, re
     )
 }
 
+#' std_colnames(.)
+#'
+#' Standardize vector of column names by converting latters to low case and replacing anything
+#' that matches regex \verb{'[^a-z0-9_\%#$@.]+'} with \verb{'_'}.
+#'
+#' @param names  A vector of column names
+#'
+#' @return  A vector of standardized column names.
+#'
+#' @examples
+#' @export
+std_colnames <- function(names)
+{
+    return (gsub('[^a-z0-9_%#$@.]+','_', tolower(names)))
+}
+
 ####################################################
 ## vim:tw=105:ft=R:spell:fdm=indent:fdl=0:fdi=:sw=4:
