@@ -1,6 +1,6 @@
 #|> Utilities and Convenience functions for data.table
 
-#' \code{setnames.dtb}
+#' Conveniently set column names of a \verb{data.table}.
 #'
 #' Convenience wrapper around \code{\link[data.table]{setnames}} function.
 #'
@@ -17,7 +17,7 @@ setnames.dtb <- function(dtb, rename.map)
     data.table::setnames(dtb, old=unname(rename.map), new=names(rename.map))
 }
 
-#' \code{convert_cols.dtb}
+#' Apply convertion functions to multiple columns of a \verb{data.table} in place.
 #'
 #' Convenience function to convert \code{\link{data.table}} columns in place
 #'
@@ -42,7 +42,7 @@ convert_cols.dtb <- function(dtb, ...)
     return(dtb)
 }
 
-#' fread.dtb(.)
+#' \verb{data.table::fread} variant that reads compressed files.
 #'
 #' Convenience wrapper around \code{\link[data.table]{fread}} that automatically deals with compressed
 #' files. Currently supported are gzip and bzip2 compressions.

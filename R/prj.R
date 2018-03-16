@@ -109,7 +109,7 @@ LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 #     return (dirs)
 }
 
-#' LR.prj_skeleton(.) create standard project skeleton sub-directores
+#' Create standard project skeleton sub-directores
 #'
 #' For project directory structure see \code{\link{LR.prj_path}}.
 #'

@@ -12,7 +12,7 @@ is.naf <- function(x) # NA or FALSE
     is.na(x) | (x==FALSE)
 }
 
-#' LR.find_file(.)
+#' Find files by regex pattern.
 #'
 #' Convenience function finding files by regex pattern.
 #'
@@ -41,7 +41,7 @@ LR.find_file <- function(dir='.', pattern='', index='last', ignore.case=TRUE, re
     )
 }
 
-#' std_colnames(.)
+#' Standardize column names to contain only low-case alphanumeric chars.
 #'
 #' Standardize vector of column names by converting latters to low case and replacing anything
 #' that matches regex \verb{'[^a-z0-9_\%#$@.]+'} with \verb{'_'}.

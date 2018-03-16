@@ -1,9 +1,9 @@
 #|> Package utilities
 
 
-#' LR.install.packages  wrapper around \code{\link{install.packages}} to install tests by default.
+#' Wrapper around \code{\link{install.packages}} to install tests by default.
 #'
-#' An option \code{"--install-tests"} is automatically prepended toto \code{INSTALL_opts}
+#' An option \code{"--install-tests"} is automatically prepended to \code{INSTALL_opts}
 #' @param pkgs  character vector of the names of packages whose current versions should be downloaded
 #'      from the repositories.
 #' @param INSTALL_opts  Optional character vector of additional options. \code{"--install-tests"} will be
