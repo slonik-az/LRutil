@@ -28,9 +28,14 @@ LR.install.packages <- function(pkgs, INSTALL_opts=NULL, ...)
 #' @export
 LR.installed_packages <- function()
 {
-    return (data.table::data.table(installed.packages(fields=
-        c('Repository','RemoteType','RemoteRepo','RemoteRef','RemoteHost')),
-        stringsAsFactors=TRUE))
+    dtb <- data.table::data.table(installed.packages(fields=
+        c('URL','Repository','RemoteType','RemoteUsername','RemoteRepo','RemoteRef','RemoteHost')),
+        stringsAsFactors=FALSE)
+    factor_names <- grep(
+        'repo|remot|LibPath|priorit|licens|needsCompil',
+        colnames(dtb), ignore.case=TRUE, value=TRUE)
+    dtb[, (factor_names) := lapply(.SD, as.factor), .SDcols=factor_names]
+    return (dtb)
 }
 
 # Built: R 3.3.2; x86_64-apple-darwin13.4.0; 2017-01-25 01:48:02 UTC; unix

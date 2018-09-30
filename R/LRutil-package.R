@@ -1,6 +1,6 @@
 #' LRutil: useful utilities by Leo Razoumov
 #'
-#' This package is a collection of useful utilities and wrappers that helps me in developting of R code.
+#' This package is a collection of useful utilities and wrappers that helps me in developing of R code.
 #'
 #' @section Coding conventions:
 #'
