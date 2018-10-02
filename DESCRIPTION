@@ -1,12 +1,13 @@
 Package: LRutil
+Version: 0.3.7
 Type: Package
-Title: Collectoin of functions I find useful.
-Version: 0.3.6
-Author: Leo Razoumov
+Title: Useful utilities by Leo Razoumov.
+Author: Leo Razoumov [aut, cre]
 Maintainer: Leo Razoumov <slonik.az@gmail.com>
-Description: Useful utilities by Leo Razoumov
+Description: Collectoin of functions I find useful.
+URL: https://github.com/slonik-az/LRutil
 License: MIT + file LICENSE
-Depends:
+Imports:
     data.table (>= 1.10.1)
 Encoding: UTF-8
 LazyData: true

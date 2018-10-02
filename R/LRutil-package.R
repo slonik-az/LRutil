@@ -13,4 +13,8 @@
 #'
 #' @docType package
 #' @name LRutil
+
+### Import packages, functions, operators:
+#' @importFrom data.table ":="
+
 NULL

@@ -29,12 +29,13 @@ LR.install.packages <- function(pkgs, INSTALL_opts=NULL, ...)
 LR.installed_packages <- function()
 {
     dtb <- data.table::data.table(installed.packages(fields=
-        c('URL','Repository','RemoteType','RemoteUsername','RemoteRepo','RemoteRef','RemoteHost')),
+        c('URL','Repository','RemoteUrl','RemoteType','RemoteUsername','RemoteRepo','RemoteBranch'
+          ,'RemoteRef','RemoteHost','RemoteSha')),
         stringsAsFactors=FALSE)
     factor_names <- grep(
         'repo|remot|LibPath|priorit|licens|needsCompil',
         colnames(dtb), ignore.case=TRUE, value=TRUE)
-    dtb[, (factor_names) := lapply(.SD, as.factor), .SDcols=factor_names]
+    convert_cols.dtb(dtb, list(factor_names, as.factor))
     return (dtb)
 }
 
