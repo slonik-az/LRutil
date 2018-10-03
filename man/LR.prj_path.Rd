@@ -23,10 +23,12 @@ List of essential project subdirs as functions that when called with
   \item{dat}{        - Data directory (dat)}
   \item{dat_raw}{    - Raw data directory (dat/raw)}
   \item{doc}{        - Documentation directory (doc)}
-  \item{lib}{        - Library code (src/lib)}
+  \item{lib}{        - Local Library   (lib)}
+  \item{lib_R}{      - Local R Library (lib/R)}
   \item{mng}{        - Data Munging/Wrangling (src/mng)}
   \item{rpt}{        - Reports (doc/rpt)}
   \item{src}{        - Source tree (src)}
+  \item{src_lib}{    - Common code under Source tree (src/lib)}
   \item{pkg}{        - In case some code is made into R-packages (pkg)}
 }
 \description{
@@ -39,6 +41,7 @@ if(!exists('prj')){ prj <- LRutil::LR.prj_path() }
 prj$root()  # return prj_root
 prj$root('readme') # returns path to prj_root/readme
 prj$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
+prj$src('subdir','test','t.R') #returns path to prj_root/src/subdir/test/t.R
+prj$src(c('a.R','b.R')) #returns vector c('prj_root/src/a.R','prj_root/src/b.R')
 }
-
 }

@@ -8,6 +8,7 @@ prj_dirs <- matrix(c(
     'doc',     'doc',
     'doc/rpt', 'rpt',
     'lib',     'lib',
+    'lib/R',   'lib_R',
     'src',     'src',
     'src/ana', 'ana',
     'src/lib', 'src_lib',
@@ -60,11 +61,19 @@ LR.prj_root <- function(dir=NULL, marker='.PRJ_ROOT')
 #'   \item{dat}{        - Data directory (dat)}
 #'   \item{dat_raw}{    - Raw data directory (dat/raw)}
 #'   \item{doc}{        - Documentation directory (doc)}
-#'   \item{lib}{        - Library code (src/lib)}
+#'   \item{lib}{        - Local Library   (lib)}
+#'   \item{lib_R}{      - Local R Library (lib/R)}
 #'   \item{mng}{        - Data Munging/Wrangling (src/mng)}
 #'   \item{rpt}{        - Reports (doc/rpt)}
 #'   \item{src}{        - Source tree (src)}
+#'   \item{src_lib}{    - Common code under Source tree (src/lib)}
 #'   \item{pkg}{        - In case some code is made into R-packages (pkg)}
+#'
+#' @param prj_root  Project Root directory if string.
+#'   if \code{NULL} or \code{FALSE} -- auto-discover from current working directory \code{getwd()}.
+#'   if \code{TRUE} -- (only use in scripts, never directly in console!)
+#'     auto-discover from the path of the script being executed or sourced, otherwise \code{getwd()}.
+#' @param marker  Project root marker file. Must exist in the project root directory.
 #'
 #' @examples
 #' \dontrun{
@@ -72,13 +81,9 @@ LR.prj_root <- function(dir=NULL, marker='.PRJ_ROOT')
 #' prj$root()  # return prj_root
 #' prj$root('readme') # returns path to prj_root/readme
 #' prj$dat_raw('foo.csv') #returns path to prj_root/dat/raw/foo.csv
+#' prj$src('subdir','test','t.R') #returns path to prj_root/src/subdir/test/t.R
+#' prj$src(c('a.R','b.R')) #returns vector c('prj_root/src/a.R','prj_root/src/b.R')
 #' }
-#'
-#' @param prj_root  Project Root directory if string.
-#'   if \code{NULL} or \code{FALSE} -- auto-discover from current working directory \code{getwd()}.
-#'   if \code{TRUE} -- (only use in scripts, never directly in console!)
-#'     auto-discover from the path of the script being executed or sourced, otherwise \code{getwd()}.
-#' @param marker  Project root marker file. Must exist in the project root directory.
 #' @export
 LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
 {
@@ -86,27 +91,13 @@ LR.prj_path <- function(prj_root=NULL, marker='.PRJ_ROOT')
         prj_root <- LR.prj_root(dir=prj_root, marker=marker)
     }
     mkfn <- function(subdir='') {
-        dir <- if(subdir==''){prj_root}else{file.path(prj_root,subdir)}
-        return (function(filename=NULL) {
-            if(is.null(filename)){dir}else{file.path(dir,filename)}
-        })
+        pfx <- if(subdir==''){prj_root}else{file.path(prj_root,subdir)}
+        return (function(...) { file.path(pfx, ...) })
     }
     res <- lapply(prj_dirs[1,], mkfn)
     names(res) <- prj_dirs[2,]
     return (res)
 
-#     dirs <- list(
-#         root    = mkfn(),
-#         ana     = mkfn('src/ana'),
-#         dat     = mkfn('dat'),
-#         dat_raw = mkfn('dat/raw'),
-#         doc     = mkfn('doc'),
-#         lib     = mkfn('src/lib'),
-#         mng     = mkfn('src/mng'),
-#         rpt     = mkfn('src/rpt'),
-#         src     = mkfn('src')
-#                   )
-#     return (dirs)
 }
 
 #' Create standard project skeleton sub-directores
