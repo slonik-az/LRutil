@@ -1,0 +1,39 @@
+---
+title: "LRutil"
+author: "Leo Razoumov"
+date: "`r Sys.Date()`"
+output:
+    rmarkdown::html_vignette:
+        toc: true
+vignette: >
+  %\VignetteIndexEntry{Useful functions by Leo Razoumov}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+
+- Never uses retina figures
+- Has a smaller default figure size
+- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+
+## Project structure
+### Project local package library
+Some projects use obscure packages or specific package versions. Installing packages into R's global package library does not work well in this situation. Instead, one would like to isolate such fragile packages into per-project local libraries. An easy way to achieve this goal is via project local `.Rprofile`.
+
+```{r}
+### Project local '.Rprofile'. Lives in '.PRJ_ROOT':
+if (file.exists('~/.Rprofile')) { # read user's ~/.Rprofile
+    source('~/.Rprofile')
+}
+### library containing locally installed packages:
+.libPaths('lib/R')
+```
+

@@ -1,4 +1,23 @@
 #|> Notes on my LRutil package.
 
+#|> Build instructions  {{{1
+devtools workflow   {{{
+
+(1) Generate documentation (*.Rd files) using RStudio menu:
+
+    Menu -> Build -> Document
+
+(2) If previous step fails to correctly build vignettes and move them to 'inst/doc':
+
+    > devtools::build_vignettes()
+
+(3) Install with devtools:
+
+    > devtools::install()
+
+}}}
+
+}}}1
+
 #############################################################
 ## vim:tw=105:ft=text:fdm=marker:fdl=0:spell:ts=2:sts=2:sw=2:
